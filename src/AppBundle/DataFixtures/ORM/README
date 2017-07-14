@@ -9,15 +9,15 @@ W phpMyAdmin dla każdej tabeli robimy 'Export' i wybieramy Format: 'PHP Array' 
 czyli powstają pliki:
 
 cat_city-localhost.php
+cat_company_office-localhost.php
 cat_company-localhost.php
-cat_office-localhost.php
 cat_person-localhost.php
 
-i mam tablice: $cat_city, $cat_company, $cat_office, $cat_person.
+i mam tablice: $cat_city, $cat_company, $cat_company_office, $cat_person.
 
 umieszczamy je w: src\AppBundle\DataFixtures\ORM\data\
 
 Moglibyśmy zrobić 'Export' dla całej bazy ale unikałem tego bo np. tablica $cat_city może być wielka (miasta) i nie
-było potrzeby łączyć wszystkiego i zaciemniać widoku. Podobnie tablica $cat_office.
+było potrzeby łączyć wszystkiego i zaciemniać widoku. Podobnie tablica $cat_company_office.
 
 Ponadto można łatwo pominąć tablicę $cat_person, którą edytujemy w aplikacji.
