@@ -8,8 +8,8 @@
  * Database `create_people`
  */
 
-/* `create_people`.`cat_office` */
-$cat_office = array(
+/* `create_people`.`cat_company_office` */
+$cat_company_office = array(
   array('id' => '1','cat_company_id' => '1','name' => 'Miami'),
   array('id' => '2','cat_company_id' => '1','name' => 'Cleveland'),
   array('id' => '3','cat_company_id' => '1','name' => 'Orlando'),
