@@ -1,0 +1,23 @@
+pZ: 14-07-2017
+--------------
+
+Export danych z mySQL do plików w data/
+---------------------------------------
+
+W phpMyAdmin dla każdej tabeli robimy 'Export' i wybieramy Format: 'PHP Array' (nie ma on dodatkowych opcji formatu)
+(w PMA mam ustawione: Szablon nazwy pliku: "@DATABASE@-@HTTP_HOST@")
+czyli powstają pliki:
+
+cat_city-localhost.php
+cat_company-localhost.php
+cat_office-localhost.php
+cat_person-localhost.php
+
+i mam tablice: $cat_city, $cat_company, $cat_office, $cat_person.
+
+umieszczamy je w: src\AppBundle\DataFixtures\ORM\data\
+
+Moglibyśmy zrobić 'Export' dla całej bazy ale unikałem tego bo np. tablica $cat_city może być wielka (miasta) i nie
+było potrzeby łączyć wszystkiego i zaciemniać widoku. Podobnie tablica $cat_office.
+
+Ponadto można łatwo pominąć tablicę $cat_person, którą edytujemy w aplikacji.
