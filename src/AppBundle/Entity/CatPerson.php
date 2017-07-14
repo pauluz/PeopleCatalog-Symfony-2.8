@@ -53,9 +53,9 @@ class CatPerson
     private $catCity;
 
     /**
-     * @var \CatOffice
+     * @var \CatCompanyOffice
      *
-     * @ORM\ManyToOne(targetEntity="CatOffice")
+     * @ORM\ManyToOne(targetEntity="CatCompanyOffice")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_company_office_id", referencedColumnName="id")
      * })
@@ -169,10 +169,10 @@ class CatPerson
     /**
      * Set catCompanyOffice
      *
-     * @param \AppBundle\Entity\CatOffice $catCompanyOffice
+     * @param \AppBundle\Entity\CatCompanyOffice $catCompanyOffice
      * @return CatPerson
      */
-    public function setCatCompanyOffice(\AppBundle\Entity\CatOffice $catCompanyOffice = null)
+    public function setCatCompanyOffice(\AppBundle\Entity\CatCompanyOffice $catCompanyOffice = null)
     {
         $this->catCompanyOffice = $catCompanyOffice;
 
@@ -182,7 +182,7 @@ class CatPerson
     /**
      * Get catCompanyOffice
      *
-     * @return \AppBundle\Entity\CatOffice 
+     * @return \AppBundle\Entity\CatCompanyOffice 
      */
     public function getCatCompanyOffice()
     {

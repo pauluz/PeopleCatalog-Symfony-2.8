@@ -5,12 +5,12 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * CatOffice
+ * CatCompanyOffice
  *
- * @ORM\Table(name="cat_office", indexes={@ORM\Index(name="cat_company_id", columns={"cat_company_id"})})
+ * @ORM\Table(name="cat_company_office", indexes={@ORM\Index(name="cat_company_id", columns={"cat_company_id"})})
  * @ORM\Entity
  */
-class CatOffice
+class CatCompanyOffice
 {
     /**
      * @var integer
@@ -54,7 +54,7 @@ class CatOffice
      * Set name
      *
      * @param string $name
-     * @return CatOffice
+     * @return CatCompanyOffice
      */
     public function setName($name)
     {
@@ -77,7 +77,7 @@ class CatOffice
      * Set catCompany
      *
      * @param \AppBundle\Entity\CatCompany $catCompany
-     * @return CatOffice
+     * @return CatCompanyOffice
      */
     public function setCatCompany(\AppBundle\Entity\CatCompany $catCompany = null)
     {
