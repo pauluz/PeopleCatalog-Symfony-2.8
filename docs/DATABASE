@@ -1,0 +1,76 @@
+pZ: 14-07-2017
+--------------
+
+Tworzenie:
+----------
+1) tworzymy najlepiej jak umiemy schemat bazy w mySQL (np. w phpMyAdmin) - grafika z Widoku Projektu
+
+2) robimy zrzut używając 'doctrine:mapping:import' do annotation - tworzy się katalog src\AppBundle\Entity\
+php app\console doctrine:mapping:import AppBundle annotation
+
+3) dodajemy settery i gettery do Entities:
+php app\console doctrine:generate:entities AppBundle
+lub
+php app\console doctrine:generate:entities --no-backup AppBundle
+
+4) ustawiamy nową bazę danych w app\config\parameters.yml (np. 'people_catalog') i wykonujemy:
+php app\console doctrine:database:create
+lub
+php app\console doctrine:database:create --if-not-exists
+
+5) wykonujemy:
+php app/console doctrine:schema:update --force
+lub podgląd:
+php app/console doctrine:schema:update --dump-sql
+
+6) ładujemy całe Fixtures:
+php app/console --no-interaction doctrine:fixtures:load
+
+7) jeśli chcemy wszystko przebudować od zera to robimy kolejno:
+php app/console doctrine:database:drop --force
+php app/console doctrine:database:create
+php app/console doctrine:schema:update --force
+php app/console --no-interaction doctrine:fixtures:load
+
+Import:
+-------
+A) php app\console doctrine:mapping:import AppBundle
+B) php app\console doctrine:mapping:import AppBundle yml
+C) php app\console doctrine:mapping:import AppBundle annotation
+
+{ \vendor\doctrine\doctrine-bundle\Command\ImportMappingDoctrineCommand.php }
+
+A) - katalog docelowy: $destPath .= '/Resources/config/doctrine'; domyślny output to 'xml'
+B) - katalog docelowy: $destPath .= '/Resources/config/doctrine';
+C) - katalog docelowy: $destPath .= '/Entity';
+
+Convert:
+--------
+Poniższe komendy 'convert' stworzą prawie to samo co te powyżej (też będą opierać się na zawartości bazy w mySQL)
+ale katalog gdzie zostanie nagrany wynik to ten drugi parametr i co z tego wynika
+dla 'xml' i 'yml' nie zrobią pełnej klasyfikacji - czyli będzie "NazwaTabeli" zamiast "AppBundle\Entity\NazwaTabeli"
+a dla 'annotation' brak będzie namespace AppBundle\Entity;
+- dlatego że 'doctrine:mapping:convert' nie zna Bundle, dla którego należy zrobić convert.
+(chyba, że użyjemy dokładnie: --namespace[=NAMESPACE]; --namespace=AppBundle\Entity\ - pamiętać o backslash na końcu!)
+
+A) php app\console doctrine:mapping:convert --from-database xml outdir
+B) php app\console doctrine:mapping:convert --from-database yml outdir
+C) php app\console doctrine:mapping:convert --from-database annotation outdir
+
+A), B) - powstaną pliki NazwaTabeli.orm.[xml|yml] albo AppBundle.Entity.NazwaTabeli.orm.[xml|yml]
+C) pliki będą w: outdir\AppBundle\Entity\NazwaTabeli.php 
+
+Help:
+-----
+php app\console help doctrine:mapping:import
+- nie ma istotnych parametrów (tylko: --em, --shard, --filter, --force)
+
+php app\console help doctrine:mapping:convert
+Options:
+      --filter=FILTER            A string pattern used to match entities that should be processed. (multiple values allowed)
+      --force                    Force to overwrite existing mapping files.
+      --from-database            Whether or not to convert mapping information from existing database.
+      --extend[=EXTEND]          Defines a base class to be extended by generated entity classes.
+      --num-spaces[=NUM-SPACES]  Defines the number of indentation spaces [default: 4]
+      --namespace[=NAMESPACE]    Defines a namespace for the generated entity classes, if converted from database.
+      --em[=EM]                  The entity manager to use for this command

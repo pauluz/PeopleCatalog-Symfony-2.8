@@ -1,0 +1,30 @@
+
+Napisanie prostej aplikacji w technologii PHP umożliwiającej zarządzanie osobami. Ma ona składać się z dwóch formularzy:
+
+1. (domyślny widok) Lista osób w postaci tabeli
+(Kolumny: Nazwisko, Imię, Miejscowość, Wiek, Płeć, Firma, Oddział firmy, przycisk edytuj, przycisk usuń),
+przy czym przycisk "usuń" powoduje usuniecie danej osoby z bazy (i przeładowanie listy, aby ta osoba się na niej nie pojawiała),
+a przycisk "edytuj" powoduje przejście do formularza 2. z wypełnionymi danymi danej osoby.
+Poza tabelką należy do formularza dodać przycisk "Nowy", który umożliwia dodanie nowej osoby (formularz 2. z pustymi polami).
+Wiek ma być obliczany na podstawie daty urodzenia danej osoby (obliczany przy wyświetlaniu danych a nie zapisany w bazie),
+Płeć ma być rozpoznawana następująco: jeśli imię osoby kończy się na literę "a" to kobieta w przeciwnym przypadku mężczyzna.
+
+2. Prosty formularz z możliwością wpisania danych danej osoby, zawierający następujące pola:
+Nazwisko (pole tekstowe),
+Imię (pole tekstowe),
+Miejscowość (pole typu dropdown z możliwością wyboru z listy),
+Data urodzenia (kalendarz),
+Firma (pole typu select z możliwością wyboru z listy),
+Oddział firmy (pole typu dropdown z możliwością wyboru z listy, wartości dostępne dopiero po wybraniu firmy - wybieramy firmę i pokazują się do wyboru jej oddziały).
+Poza tym formularz ma zawierać dwa przyciski: "Zapisz" - po naciśnięciu którego dane osoby zostają zapisane i następuje przekierowanie do formularza 1.
+oraz przycisk "Anuluj" który powoduje powrót do formularza 1. bez zapisywania danych.
+
+Baza danych ma składać się z 4 tabel:
+- osoby,
+- miejscowosci,
+- firmy,
+- oddzialy_firmy,
+przy czym oddział jest przypisany do danej firmy (czyli firma A ma oddziały A1, A2, a firma B ma oddziały B1, B2).
+
+Sugerowany framework to Laravel 5 lub Symfony 2
+Sugerowana baza danych jest MySQL lub PostgreSQL

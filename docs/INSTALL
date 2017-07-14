@@ -1,0 +1,54 @@
+pZ: 11-07-2017
+--------------
+
+php -r "file_put_contents('symfony', file_get_contents('https://symfony.com/installer'));"
+php symfony -V
+Symfony Installer version 1.5.9
+
+php symfony new people_catalog 2.8
+cd people_catalog
+
+php app\console -V
+Symfony version 2.8.24 - app/dev/debug
+
+php phpunit.phar -c app/
+PHPUnit 6.2.3 by Sebastian Bergmann and contributors.
+.                                                                   1 / 1 (100%)
+Time: 383 ms, Memory: 16.00MB
+OK (1 test, 2 assertions)
+
+composer require doctrine/doctrine-fixtures-bundle
+
+Using version ^2.3 for doctrine/doctrine-fixtures-bundle
+./composer.json has been updated
+Package operations: 2 installs, 0 updates, 0 removals
+  - Installing doctrine/data-fixtures (v1.2.2): Downloading (100%)
+  - Installing doctrine/doctrine-fixtures-bundle (2.3.0): Downloading (100%)
+
+php app\console server:run
+ [OK] Server running on http://127.0.0.1:8000
+ // Quit the server with CONTROL-C.
+
+
+Software versions:
+------------------
+
+{https://phar.phpunit.de/phpunit-6.2.phar}
+php phpunit.phar --version
+PHPUnit 6.2.3 by Sebastian Bergmann and contributors.
+
+composer -V
+Composer version 1.4.2 2017-05-17 08:17:52
+
+php -v
+PHP 7.1.1 (cli) (built: Jan 18 2017 18:51:14) ( ZTS MSVC14 (Visual C++ 2015) x86 )
+Copyright (c) 1997-2017 The PHP Group
+Zend Engine v3.1.0, Copyright (c) 1998-2017 Zend Technologies
+    with Xdebug v2.5.0, Copyright (c) 2002-2016, by Derick Rethans
+
+httpd -v
+Server version: Apache/2.4.25 (Win32)
+Server built:   Dec 17 2016 10:42:52
+
+mysql -V
+mysql  Ver 15.1 Distrib 10.1.21-MariaDB, for Win32 (AMD64)
