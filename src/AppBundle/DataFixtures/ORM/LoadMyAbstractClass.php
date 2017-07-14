@@ -20,6 +20,8 @@ abstract class LoadMyAbstractClass extends AbstractFixture implements OrderedFix
     private const ENTITY_NAMESPACE = '\AppBundle\Entity\\'; // podwójny backslash w tych apostrofach
 
     protected $fixture_table = '';
+    protected $reference_fields = [];
+    protected $add_reference = true;
 
     /**
      * @var ContainerInterface
@@ -51,7 +53,11 @@ abstract class LoadMyAbstractClass extends AbstractFixture implements OrderedFix
         }
     }
 
-    public function requireFixtureFile()
+    protected function setAddReference($state = true) {
+        $this->add_reference = $state;
+    }
+
+    protected function requireFixtureFile()
     {
         $name = __DIR__ . self::FIXTURE_FILE_DIR . $this->fixture_table . self::FIXTURE_SUFFIX . '.php';
 
@@ -65,7 +71,7 @@ abstract class LoadMyAbstractClass extends AbstractFixture implements OrderedFix
         }
     }
 
-    protected function loadArrayToDb(ObjectManager & $manager, array $reference_fields = array())
+    protected function loadArrayToDb(ObjectManager & $manager)
     {
         $name = $this->container->camelize($this->fixture_table);
 
@@ -81,17 +87,24 @@ abstract class LoadMyAbstractClass extends AbstractFixture implements OrderedFix
                     $value = null;
                 }
 
-                if ($property == "id") {
-                    // jeśli $this->data nie ma kolumny "id" to się nie tworzą niepotrzebne Referencje
-                    $this->addReference($this->fixture_table . $value, $object);
+                if ($property == 'id') {
+                    if ($this->add_reference) {
+                        $this->addReference($this->fixture_table . $value, $object);
+                    }
                     continue;
-                } elseif (in_array($property, $reference_fields)) {
-                    $value = $this->getReference($property . $value);
+                } elseif (substr($property, -3) === '_id') {
+                    $property = substr($property, 0, -3);
+                    if (in_array($property, $this->reference_fields)) {
+                        $value = $this->getReference($property . $value);
+                    }
+                } elseif ($property == 'birth') {
+                    if (! empty($value)) {
+                        $value = new \DateTime($value);
+                    }
                 }
 
-                $setter = 'set' . ucfirst($property);
+                $setter = 'set' . $this->container->camelize($property);
                 $object->$setter($value);
-
             }
 
             $manager->persist($object);
