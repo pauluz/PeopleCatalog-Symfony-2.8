@@ -6,7 +6,7 @@
 
 {% block page %}
 
-<h1>{{ 'views.new.creation'|trans({'%entity%': 'CatPerson'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>
+<h1>Dodaj nową osobę</h1>
 
 <form class="well" action="{{ path('people_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}

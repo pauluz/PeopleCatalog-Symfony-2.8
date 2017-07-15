@@ -11,8 +11,8 @@ class CatPersonType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('firstname')
             ->add('lastname')
+            ->add('firstname')
             ->add('birth')
             ->add('catCity')
             ->add('catCompanyOffice')

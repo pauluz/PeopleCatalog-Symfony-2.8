@@ -35,23 +35,25 @@ class CatPersonController extends Controller
 
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
+//        $deleteForm = $this->createDeleteForm($id);
+
         return array(
-            'entities' => $entities,
-            'pagerHtml' => $pagerHtml,
-            'filterForm' => $filterForm->createView(),
+            'entities'    => $entities,
+            'pagerHtml'   => $pagerHtml,
+            'filterForm'  => $filterForm->createView(),
         );
     }
 
     /**
-    * Create filter form and process filter request.
-    *
-    */
+     * Create filter form and process filter request.
+     *
+     */
     protected function filter()
     {
-        $request = $this->getRequest();
-        $session = $request->getSession();
-        $filterForm = $this->createForm(new CatPersonFilterType());
-        $em = $this->getDoctrine()->getManager();
+        $request      = $this->getRequest();
+        $session      = $request->getSession();
+        $filterForm   = $this->createForm(new CatPersonFilterType());
+        $em           = $this->getDoctrine()->getManager();
         $queryBuilder = $em->getRepository('AppBundle:CatPerson')->createQueryBuilder('e');
 
         // Reset filter
@@ -84,30 +86,30 @@ class CatPersonController extends Controller
     }
 
     /**
-    * Get results from paginator and get paginator view.
-    *
-    */
+     * Get results from paginator and get paginator view.
+     *
+     */
     protected function paginator($queryBuilder)
     {
         // Paginator
-        $adapter = new DoctrineORMAdapter($queryBuilder);
+        $adapter    = new DoctrineORMAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
+        $pagerfanta->setMaxPerPage(2);
         $currentPage = $this->getRequest()->get('page', 1);
         $pagerfanta->setCurrentPage($currentPage);
         $entities = $pagerfanta->getCurrentPageResults();
 
         // Paginator - route generator
-        $me = $this;
-        $routeGenerator = function($page) use ($me)
-        {
+        $me             = $this;
+        $routeGenerator = function ($page) use ($me) {
             return $me->generateUrl('people', array('page' => $page));
         };
 
         // Paginator - view
         $translator = $this->get('translator');
-        $view = new TwitterBootstrapView();
-        $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
-            'proximity' => 3,
+        $view       = new TwitterBootstrapView();
+        $pagerHtml  = $view->render($pagerfanta, $routeGenerator, array(
+            'proximity'    => 3,
             'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
             'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
         ));
@@ -124,8 +126,8 @@ class CatPersonController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new CatPerson();
-        $form = $this->createForm(new CatPersonType(), $entity);
+        $entity = new CatPerson();
+        $form   = $this->createForm(new CatPersonType(), $entity);
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -174,7 +176,7 @@ class CatPersonController extends Controller
 
         $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
@@ -199,11 +201,11 @@ class CatPersonController extends Controller
 
         $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
-        $editForm = $this->createForm(new CatPersonType(), $entity);
+        $editForm   = $this->createForm(new CatPersonType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -226,12 +228,12 @@ class CatPersonController extends Controller
 
         $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
 
-        if (!$entity) {
+        if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new CatPersonType(), $entity);
+        $editForm   = $this->createForm(new CatPersonType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
@@ -263,10 +265,10 @@ class CatPersonController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+            $em     = $this->getDoctrine()->getManager();
             $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
 
-            if (!$entity) {
+            if (! $entity) {
                 throw $this->createNotFoundException('Unable to find CatPerson entity.');
             }
 
@@ -291,7 +293,6 @@ class CatPersonController extends Controller
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }
