@@ -164,7 +164,7 @@ class CatPersonController extends Controller
     /**
      * Finds and displays a CatPerson entity.
      *
-     * @Route("/{id}", name="people_show")
+     * @Route("/{id}", name="people_show", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template("CatPerson/show.html.twig")
      */
@@ -189,7 +189,7 @@ class CatPersonController extends Controller
     /**
      * Displays a form to edit an existing CatPerson entity.
      *
-     * @Route("/{id}/edit", name="people_edit")
+     * @Route("/{id}/edit", name="people_edit", requirements={"id" = "\d+"})
      * @Method("GET")
      * @Template("CatPerson/edit.html.twig")
      */
@@ -216,7 +216,7 @@ class CatPersonController extends Controller
     /**
      * Edits an existing CatPerson entity.
      *
-     * @Route("/{id}", name="people_update")
+     * @Route("/{id}", name="people_update", requirements={"id" = "\d+"})
      * @Method("PUT")
      * @Template("CatPerson/edit.html.twig")
      */
@@ -254,7 +254,7 @@ class CatPersonController extends Controller
     /**
      * Deletes a CatPerson entity.
      *
-     * @Route("/{id}", name="people_delete")
+     * @Route("/{id}", name="people_delete", requirements={"id" = "\d+"})
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
