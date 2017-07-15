@@ -20,7 +20,6 @@ OK (1 test, 2 assertions)
 composer require doctrine/doctrine-fixtures-bundle
 
 Using version ^2.3 for doctrine/doctrine-fixtures-bundle
-./composer.json has been updated
 Package operations: 2 installs, 0 updates, 0 removals
   - Installing doctrine/data-fixtures (v1.2.2): Downloading (100%)
   - Installing doctrine/doctrine-fixtures-bundle (2.3.0): Downloading (100%)

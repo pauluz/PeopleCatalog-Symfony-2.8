@@ -1,5 +1,7 @@
 {
     "name": "pauluz/people_catalog",
+    "description": "People Catalog Example by pauluZ",
+    "version": "1.0.0",
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -49,6 +51,7 @@
             "@symfony-scripts"
         ]
     },
+    "minimum-stability": "stable",
     "config": {
         "bin-dir": "bin",
         "sort-packages": true
@@ -56,7 +59,7 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
-        "symfony-assets-install": "relative",
+        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },
