@@ -8,8 +8,8 @@ use Doctrine\ORM\Mapping as ORM;
  * CatPerson
  *
  * @ORM\Table(name="cat_person", indexes={
- *  @ORM\Index(name="city", columns={"cat_city_id"}),
- *  @ORM\Index(name="cat_office_id", columns={"cat_company_office_id"})
+ *  @ORM\Index(name="cat_city_id", columns={"cat_city_id"}),
+ *  @ORM\Index(name="cat_company_office_id", columns={"cat_company_office_id"})
  * })
  * @ORM\Entity
  */
@@ -70,7 +70,7 @@ class CatPerson
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class CatPerson
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -116,7 +116,7 @@ class CatPerson
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -139,7 +139,7 @@ class CatPerson
     /**
      * Get birth
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirth()
     {
@@ -162,7 +162,7 @@ class CatPerson
     /**
      * Get catCity
      *
-     * @return \AppBundle\Entity\CatCity 
+     * @return \AppBundle\Entity\CatCity
      */
     public function getCatCity()
     {
@@ -185,7 +185,7 @@ class CatPerson
     /**
      * Get catCompanyOffice
      *
-     * @return \AppBundle\Entity\CatCompanyOffice 
+     * @return \AppBundle\Entity\CatCompanyOffice
      */
     public function getCatCompanyOffice()
     {
