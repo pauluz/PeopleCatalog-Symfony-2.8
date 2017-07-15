@@ -1,3 +1,7 @@
+# pZ:
+# routingi (prefixy) dla paska na dole ekranu (_wdt) oraz dla przeglądania PROFILE'era
+# http://symfony2.localhost/app_dev.php/_profiler/
+
 _wdt:
     resource: '@WebProfilerBundle/Resources/config/routing/wdt.xml'
     prefix: /_wdt
