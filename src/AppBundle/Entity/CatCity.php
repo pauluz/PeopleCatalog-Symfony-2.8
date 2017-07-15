@@ -28,12 +28,37 @@ class CatCity
      */
     private $name;
 
+    /**
+     * One City has Many Persons.
+     * @var \ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CatPerson", mappedBy="catCity", cascade={"persist","merge"})
+     * @ORM\OrderBy({"sequence"="ASC"})
+     */
+    private $catPersons;
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /* AUTOMAT */
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->catPersons = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -56,10 +81,43 @@ class CatCity
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Add catPersons
+     *
+     * @param \AppBundle\Entity\CatPerson $catPersons
+     * @return CatCity
+     */
+    public function addCatPerson(\AppBundle\Entity\CatPerson $catPersons)
+    {
+        $this->catPersons[] = $catPersons;
+
+        return $this;
+    }
+
+    /**
+     * Remove catPersons
+     *
+     * @param \AppBundle\Entity\CatPerson $catPersons
+     */
+    public function removeCatPerson(\AppBundle\Entity\CatPerson $catPersons)
+    {
+        $this->catPersons->removeElement($catPersons);
+    }
+
+    /**
+     * Get catPersons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCatPersons()
+    {
+        return $this->catPersons;
     }
 }

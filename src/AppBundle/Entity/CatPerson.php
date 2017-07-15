@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CatPerson
  *
- * @ORM\Table(name="cat_person", indexes={@ORM\Index(name="city", columns={"cat_city_id"}), @ORM\Index(name="cat_office_id", columns={"cat_company_office_id"})})
+ * @ORM\Table(name="cat_person", indexes={
+ *  @ORM\Index(name="city", columns={"cat_city_id"}),
+ *  @ORM\Index(name="cat_office_id", columns={"cat_company_office_id"})
+ * })
  * @ORM\Entity
  */
 class CatPerson
@@ -45,9 +48,9 @@ class CatPerson
     /**
      * @var \CatCity
      *
-     * @ORM\ManyToOne(targetEntity="CatCity")
+     * @ORM\ManyToOne(targetEntity="CatCity", inversedBy="catPersons")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cat_city_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="cat_city_id", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $catCity;
@@ -55,19 +58,19 @@ class CatPerson
     /**
      * @var \CatCompanyOffice
      *
-     * @ORM\ManyToOne(targetEntity="CatCompanyOffice")
+     * @ORM\ManyToOne(targetEntity="CatCompanyOffice", inversedBy="catCompanyOffices")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cat_company_office_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="cat_company_office_id", referencedColumnName="id", onDelete="SET NULL")
      * })
      */
     private $catCompanyOffice;
 
-
+    /* AUTOMAT */
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -90,7 +93,7 @@ class CatPerson
     /**
      * Get firstname
      *
-     * @return string 
+     * @return string
      */
     public function getFirstname()
     {
@@ -113,7 +116,7 @@ class CatPerson
     /**
      * Get lastname
      *
-     * @return string 
+     * @return string
      */
     public function getLastname()
     {
@@ -136,7 +139,7 @@ class CatPerson
     /**
      * Get birth
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getBirth()
     {
@@ -159,7 +162,7 @@ class CatPerson
     /**
      * Get catCity
      *
-     * @return \AppBundle\Entity\CatCity 
+     * @return \AppBundle\Entity\CatCity
      */
     public function getCatCity()
     {
@@ -182,7 +185,7 @@ class CatPerson
     /**
      * Get catCompanyOffice
      *
-     * @return \AppBundle\Entity\CatCompanyOffice 
+     * @return \AppBundle\Entity\CatCompanyOffice
      */
     public function getCatCompanyOffice()
     {

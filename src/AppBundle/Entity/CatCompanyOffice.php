@@ -7,7 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * CatCompanyOffice
  *
- * @ORM\Table(name="cat_company_office", indexes={@ORM\Index(name="cat_company_id", columns={"cat_company_id"})})
+ * @ORM\Table(name="cat_company_office", indexes={
+ *  @ORM\Index(name="cat_company_id", columns={"cat_company_id"})
+ * })
  * @ORM\Entity
  */
 class CatCompanyOffice
@@ -31,19 +33,44 @@ class CatCompanyOffice
     /**
      * @var \CatCompany
      *
-     * @ORM\ManyToOne(targetEntity="CatCompany")
+     * @ORM\ManyToOne(targetEntity="CatCompany", inversedBy="catCompanies")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="cat_company_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="cat_company_id", referencedColumnName="id", onDelete="CASCADE")
      * })
      */
     private $catCompany;
 
+    /**
+     * One Office has Many Persons.
+     * @var \ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="CatPerson", mappedBy="catCompanyOffice", cascade={"persist","merge"})
+     * @ORM\OrderBy({"sequence"="ASC"})
+     */
+    private $catPersons;
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
+    }
+
+    /* AUTOMAT */
+
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->catPersons = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -66,7 +93,7 @@ class CatCompanyOffice
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -89,10 +116,43 @@ class CatCompanyOffice
     /**
      * Get catCompany
      *
-     * @return \AppBundle\Entity\CatCompany 
+     * @return \AppBundle\Entity\CatCompany
      */
     public function getCatCompany()
     {
         return $this->catCompany;
+    }
+
+    /**
+     * Add catPersons
+     *
+     * @param \AppBundle\Entity\CatPerson $catPersons
+     * @return CatCompanyOffice
+     */
+    public function addCatPerson(\AppBundle\Entity\CatPerson $catPersons)
+    {
+        $this->catPersons[] = $catPersons;
+
+        return $this;
+    }
+
+    /**
+     * Remove catPersons
+     *
+     * @param \AppBundle\Entity\CatPerson $catPersons
+     */
+    public function removeCatPerson(\AppBundle\Entity\CatPerson $catPersons)
+    {
+        $this->catPersons->removeElement($catPersons);
+    }
+
+    /**
+     * Get catPersons
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCatPersons()
+    {
+        return $this->catPersons;
     }
 }
