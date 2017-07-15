@@ -33,7 +33,7 @@ class CatCity
      * @var \ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="CatPerson", mappedBy="catCity", cascade={"persist","merge"})
-     * @ORM\OrderBy({"sequence"="ASC"})
+     * @ORM\OrderBy({"lastname"="ASC"})
      */
     private $catPersons;
 
@@ -58,7 +58,7 @@ class CatCity
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -81,7 +81,7 @@ class CatCity
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -114,7 +114,7 @@ class CatCity
     /**
      * Get catPersons
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection 
      */
     public function getCatPersons()
     {

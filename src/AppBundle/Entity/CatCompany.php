@@ -33,9 +33,9 @@ class CatCompany
      * @var \ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="CatCompanyOffice", mappedBy="catCompany", cascade={"persist","merge"})
-     * @ORM\OrderBy({"sequence"="ASC"})
+     * @ORM\OrderBy({"name"="ASC"})
      */
-    private $catCompanies;
+    private $catCompanyOffices;
 
     /**
      * @return string
@@ -52,7 +52,7 @@ class CatCompany
      */
     public function __construct()
     {
-        $this->catCompanies = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->catCompanyOffices = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -89,35 +89,35 @@ class CatCompany
     }
 
     /**
-     * Add catCompanies
+     * Add catCompanyOffices
      *
-     * @param \AppBundle\Entity\CatCompanyOffice $catCompanies
+     * @param \AppBundle\Entity\CatCompanyOffice $catCompanyOffices
      * @return CatCompany
      */
-    public function addCatCompany(\AppBundle\Entity\CatCompanyOffice $catCompanies)
+    public function addCatCompanyOffice(\AppBundle\Entity\CatCompanyOffice $catCompanyOffices)
     {
-        $this->catCompanies[] = $catCompanies;
+        $this->catCompanyOffices[] = $catCompanyOffices;
 
         return $this;
     }
 
     /**
-     * Remove catCompanies
+     * Remove catCompanyOffices
      *
-     * @param \AppBundle\Entity\CatCompanyOffice $catCompanies
+     * @param \AppBundle\Entity\CatCompanyOffice $catCompanyOffices
      */
-    public function removeCatCompany(\AppBundle\Entity\CatCompanyOffice $catCompanies)
+    public function removeCatCompanyOffice(\AppBundle\Entity\CatCompanyOffice $catCompanyOffices)
     {
-        $this->catCompanies->removeElement($catCompanies);
+        $this->catCompanyOffices->removeElement($catCompanyOffices);
     }
 
     /**
-     * Get catCompanies
+     * Get catCompanyOffices
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getCatCompanies()
+    public function getCatCompanyOffices()
     {
-        return $this->catCompanies;
+        return $this->catCompanyOffices;
     }
 }

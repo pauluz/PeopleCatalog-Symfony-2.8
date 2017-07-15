@@ -33,7 +33,7 @@ class CatCompanyOffice
     /**
      * @var \CatCompany
      *
-     * @ORM\ManyToOne(targetEntity="CatCompany", inversedBy="catCompanies")
+     * @ORM\ManyToOne(targetEntity="CatCompany", inversedBy="catCompanyOffices")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_company_id", referencedColumnName="id", onDelete="CASCADE")
      * })
@@ -45,7 +45,7 @@ class CatCompanyOffice
      * @var \ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="CatPerson", mappedBy="catCompanyOffice", cascade={"persist","merge"})
-     * @ORM\OrderBy({"sequence"="ASC"})
+     * @ORM\OrderBy({"lastname"="ASC"})
      */
     private $catPersons;
 

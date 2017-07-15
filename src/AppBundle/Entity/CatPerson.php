@@ -58,7 +58,7 @@ class CatPerson
     /**
      * @var \CatCompanyOffice
      *
-     * @ORM\ManyToOne(targetEntity="CatCompanyOffice", inversedBy="catCompanyOffices")
+     * @ORM\ManyToOne(targetEntity="CatCompanyOffice", inversedBy="catPersons")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_company_office_id", referencedColumnName="id", onDelete="SET NULL")
      * })
@@ -70,7 +70,7 @@ class CatPerson
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -93,7 +93,7 @@ class CatPerson
     /**
      * Get firstname
      *
-     * @return string
+     * @return string 
      */
     public function getFirstname()
     {
@@ -116,7 +116,7 @@ class CatPerson
     /**
      * Get lastname
      *
-     * @return string
+     * @return string 
      */
     public function getLastname()
     {
@@ -139,7 +139,7 @@ class CatPerson
     /**
      * Get birth
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getBirth()
     {
@@ -162,7 +162,7 @@ class CatPerson
     /**
      * Get catCity
      *
-     * @return \AppBundle\Entity\CatCity
+     * @return \AppBundle\Entity\CatCity 
      */
     public function getCatCity()
     {
@@ -185,7 +185,7 @@ class CatPerson
     /**
      * Get catCompanyOffice
      *
-     * @return \AppBundle\Entity\CatCompanyOffice
+     * @return \AppBundle\Entity\CatCompanyOffice 
      */
     public function getCatCompanyOffice()
     {
