@@ -24,6 +24,13 @@ Package operations: 2 installs, 0 updates, 0 removals
   - Installing doctrine/data-fixtures (v1.2.2): Downloading (100%)
   - Installing doctrine/doctrine-fixtures-bundle (2.3.0): Downloading (100%)
 
+composer require jordillonch/crud-generator:dev-master
+
+Package operations: 3 installs, 0 updates, 0 removals
+  - Installing lexik/form-filter-bundle (v3.0.8): Downloading (100%)
+  - Installing pagerfanta/pagerfanta (v1.0.5): Downloading (100%)
+  - Installing jordillonch/crud-generator (dev-master 4454128): Cloning 4454128d38
+
 php app\console server:run
  [OK] Server running on http://127.0.0.1:8000
  // Quit the server with CONTROL-C.
