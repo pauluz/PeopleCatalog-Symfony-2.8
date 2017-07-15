@@ -1,3 +1,8 @@
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
+
+# pZ: Routings z naszego Bundle'a
+people_catalog:
+    resource: "@AppBundle/Resources/config/routing.yml"
+    prefix:   /

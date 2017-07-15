@@ -1,0 +1,8 @@
+people_catalog_redirect:
+    path: /
+    defaults:
+        _controller: FrameworkBundle:Redirect:Redirect
+        route: people
+#        _controller: FrameworkBundle:Redirect:urlRedirect
+#        path: /people
+        permanent: true
