@@ -31,6 +31,7 @@ Package operations: 3 installs, 0 updates, 0 removals
   - Installing pagerfanta/pagerfanta (v1.0.5): Downloading (100%)
   - Installing jordillonch/crud-generator (dev-master 4454128): Cloning 4454128d38
 
+php app\console server:run --docroot=public_html
 php app\console server:run
  [OK] Server running on http://127.0.0.1:8000
  // Quit the server with CONTROL-C.
