@@ -67,8 +67,8 @@
                         <td>{{ entity.catCity.getName }}</td>
                         <td>
                             {% if entity.birth %}
-                                <span title="{{ entity.birth|date('Y-m-d') }}">{{ ("now"|date('Y') - entity.birth|date('Y')) }} lat</span>
-                                {#<br><span class="muted"><small><em>(ur. {{ entity.birth|date('Y-m-d') }})</em></small></span>#}
+                                <span title="{{ entity.birth|date('d-m-Y') }}">{{ ("now"|date('Y') - entity.birth|date('Y')) }} lat</span>
+                                {#<br><span class="muted"><small><em>(ur. {{ entity.birth|date('d-m-Y') }})</em></small></span>#}
                             {% endif %}
                         </td>
                         <td>{{ plec(entity.firstname) }}</td>
