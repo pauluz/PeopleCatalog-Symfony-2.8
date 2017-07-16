@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -23,6 +24,36 @@ use AppBundle\Form\CatPersonFilterType;
 class CatPersonController extends Controller
 {
     /**
+     * Ajax.
+     *
+     * @Route("/ajax/office", name="people_update_office_ajax")
+     * @Method("POST")
+     */
+    public function ajaxOfficeAction(Request $request)
+    {
+        $id = $request->get('company_select');
+
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('AppBundle:CatCompanyOffice')->findByCatCompany($id);
+
+        if ($entities) {
+            foreach ($entities as $entity) {
+                $options[] = [
+                    'id' => $entity->getId(),
+                    'name' => $entity->getName(),
+                ];
+            }
+        } else {
+            $options[] = [
+                'id' => 0,
+                'name' => 'Brak oddziałów',
+            ];
+        }
+
+        return new JsonResponse(array('options' => $options));
+    }
+
+    /**
      * Lists all CatPerson entities.
      *
      * @Route("/", name="people")
@@ -35,12 +66,16 @@ class CatPersonController extends Controller
 
         list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
-//        $deleteForm = $this->createDeleteForm($id);
+        $deleteForms = [];
+        foreach ($entities as $entity) {
+            $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId())->createView();
+        }
 
         return array(
             'entities'    => $entities,
             'pagerHtml'   => $pagerHtml,
             'filterForm'  => $filterForm->createView(),
+            'delete_forms' => $deleteForms,
         );
     }
 
@@ -232,7 +267,6 @@ class CatPersonController extends Controller
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm   = $this->createForm(new CatPersonType(), $entity);
         $editForm->bind($request);
 
@@ -241,8 +275,10 @@ class CatPersonController extends Controller
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
-            return $this->redirect($this->generateUrl('people_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('people'));
         } else {
+            $deleteForm = $this->createDeleteForm($id);
+
             $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
         }
 

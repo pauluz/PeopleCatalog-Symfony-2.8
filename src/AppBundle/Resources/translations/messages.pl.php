@@ -6,6 +6,6 @@ return array (
   'Lastname' => 'Nazwisko',
   'Birth' => 'Urodziny',
   'Cat city' => 'Miasto',
-  'Cat company office' => 'Oddział firmy',
+  'Cat company office' => 'Oddziały firmy',
   'Cat company' => 'Firma',
 );

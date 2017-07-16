@@ -1,8 +1,6 @@
 {% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
-{% block title %}
-    {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': 'CatPerson'}, 'JordiLlonchCrudGeneratorBundle') }}
-{% endblock %}
+{% block title %}Lista osób w bazie{% endblock %}
 
 {% block page %}
 
@@ -53,7 +51,11 @@
                 <tr>
                     <th>Nazwisko</th>
                     <th>Imię</th>
+                    <th>Miejscowość</th>
                     <th>Wiek</th>
+                    <th>Płeć</th>
+                    <th>Firma</th>
+                    <th>Oddział firmy</th>
                     <th>{{ 'views.index.actions'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</th>
                 </tr>
                 </thead>
@@ -62,11 +64,28 @@
                     <tr>
                         <td><a href="{{ path('people_show', { 'id': entity.id }) }}">{{ entity.lastname }}</a></td>
                         <td>{{ entity.firstname }}</td>
-                        <td>{% if entity.birth %}{{ entity.birth|date('Y-m-d') }}{% endif %}</td>
+                        <td>{{ entity.catCity.getName }}</td>
                         <td>
+                            {% if entity.birth %}{{ ("now"|date('Y') - entity.birth|date('Y')) }} lat
+                                {#<br><span class="muted"><small><em>(ur. {{ entity.birth|date('Y-m-d') }})</em></small></span>#}
+                            {% endif %}
+                        </td>
+                        <td>{{ plec(entity.firstname) }}</td>
+                        <td>{{ entity.catCompanyOffice.getCatCompany.getName }}</td>
+                        <td>{{ entity.catCompanyOffice.getName }}</td>
+                        <td>
+                            <div class="float-left">
                             <a class="btn btn-mini" href="{{ path('people_edit', { 'id': entity.id }) }}">
                                 {{ 'views.actions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
                             </a>
+                            </div>
+                            <div class="float-left">
+                            <form action="{{ path('people_delete', { 'id': entity.id }) }}" method="post">
+                                <input type="hidden" name="_method" value="DELETE" />
+                                {{ form_widget(delete_forms[entity.id]) }}
+                                <button class="btn btn-mini btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle')|escape('js') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+                            </form>
+                            </div>
                         </td>
                     </tr>
                 {% endfor %}
@@ -80,7 +99,7 @@
 
         <div class="span8">
             <a class="btn btn-primary likepaginator" href="{{ path('people_new') }}">
-                {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} CatPerson
+                {{ 'views.index.createnew'|trans({}, 'JordiLlonchCrudGeneratorBundle') }} nową osobę
             </a>
         </div>
     </div>
