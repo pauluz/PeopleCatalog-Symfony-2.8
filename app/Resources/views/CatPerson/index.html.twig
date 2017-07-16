@@ -65,12 +65,7 @@
                         <td><a href="{{ path('people_show', { 'id': entity.id }) }}">{{ entity.lastname }}</a></td>
                         <td>{{ entity.firstname }}</td>
                         <td>{{ entity.catCity.getName }}</td>
-                        <td>
-                            {% if entity.birth %}
-                                <span title="{{ entity.birth|date('d-m-Y') }}">{{ ("now"|date('Y') - entity.birth|date('Y')) }} lat</span>
-                                {#<br><span class="muted"><small><em>(ur. {{ entity.birth|date('d-m-Y') }})</em></small></span>#}
-                            {% endif %}
-                        </td>
+                        <td>{% if entity.birth %}<span title="{{ entity.birth|date('d-m-Y') }}">{{ wiek(entity.birth) }}</span>{% endif %}</td>
                         <td>{{ plec(entity.firstname) }}</td>
                         <td>{{ entity.catCompanyOffice.getCatCompany.getName }}</td>
                         <td>{{ entity.catCompanyOffice.getName }}</td>

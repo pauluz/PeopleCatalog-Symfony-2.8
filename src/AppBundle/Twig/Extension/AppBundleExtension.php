@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Twig\Extension;
 
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class AppBundleExtension extends \Twig_Extension
 {
@@ -12,7 +13,7 @@ class AppBundleExtension extends \Twig_Extension
      */
     protected $environment;
 
-    public function __construct($container)
+    public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
     }
@@ -52,11 +53,26 @@ class AppBundleExtension extends \Twig_Extension
     }
 
     /**
-     * Wiek
+     * pZ: getAge - Wiek osoby
+     *
+     * @param $birth \DateTime
+     *
+     * @return string
      */
     public function getAge($birth)
     {
-        return $birth;
+        $age = date('Y') - $birth->format('Y');
+        if ($age == 1) {
+            $txt = 'rok';
+        } elseif ($age > 1 && $age < 5) {
+            $txt = 'lata';
+        } elseif ($age > 21 && in_array(substr($age, -1), [2, 3, 4])) {
+            $txt = 'lata';
+        } else {
+            $txt = 'lat';
+        }
+
+        return $age . ' ' . $txt;
     }
 
     public function getName()
