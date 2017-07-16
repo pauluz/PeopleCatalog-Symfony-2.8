@@ -136,7 +136,7 @@ class CatPersonController extends Controller
         // Paginator
         $adapter    = new DoctrineORMAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
-//        $pagerfanta->setMaxPerPage(2);
+        $pagerfanta->setMaxPerPage(2);
         $currentPage = $this->getRequest()->get('page', 1);
         $pagerfanta->setCurrentPage($currentPage);
         $entities = $pagerfanta->getCurrentPageResults();
