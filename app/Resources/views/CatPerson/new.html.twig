@@ -1,25 +1,34 @@
-{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+{% extends 'AppBundle::layout.html.twig' %}
 
-{% block title %}
-{{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': 'CatPerson'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% block title %}Dodaj nową osobę{% endblock %}
+
+{% block stylesheet_top %}
+    {{ parent() }}
+    <link href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/css/bootstrap-datepicker.css" rel="stylesheet">
 {% endblock %}
 
 {% block page %}
 
-<h1>Dodaj nową osobę</h1>
+    <h1>Dodaj nową osobę</h1>
 
-<form class="well" action="{{ path('people_create') }}" method="post" {{ form_enctype(form) }}>
-    {{ form_widget(form) }}
-    <p>
-        <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
-    </p>
-</form>
+    <form class="well" action="{{ path('people_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_widget(form) }}
+        <p>
+            <button type="submit" class="btn btn-success">{{ 'views.new.create'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </p>
+    </form>
 
-<div>
-    <div class="float-left">
-        <a class="btn" href="{{ path('people') }}">
-            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
-        </a>
+    <div>
+        <div class="float-left">
+            <a class="btn" href="{{ path('people') }}">
+                {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+            </a>
+        </div>
     </div>
-</div>
+{% endblock %}
+
+{% block javascript %}
+    {{ parent() }}
+    <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
+    {% include('AppBundle::javascript.js.twig') %}
 {% endblock %}

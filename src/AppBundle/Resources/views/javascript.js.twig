@@ -1,0 +1,51 @@
+<script>
+    jQuery(function($) {
+        $("#appbundle_catperson_catCompany").change(function() {
+            var company_select = $('#appbundle_catperson_catCompany').val();
+            $.ajax({
+                url: "{{ path('people_update_office_ajax') }}",
+                type: "POST",
+                dataType: "json",
+                data: {'company_select': company_select},
+                success: function(data) {
+                    var options, index, select, option;
+
+                    // Get the raw DOM object for the select box
+                    select = document.getElementById('appbundle_catperson_catCompanyOffice');
+
+                    // Clear the old options
+                    select.options.length = 0;
+
+                    // Load the new options
+                    options = data.options;
+                    for (index = 0; index < options.length; ++index) {
+                        option = options[index];
+                        select.options.add(new Option(option['name'], option['id']));
+                    }
+                }
+            });
+        });
+    });
+
+    jQuery(document).ready(function() {
+        $.fn.datepicker.dates['pl'] = {
+            days: ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"],
+            daysShort: ["Nie", "Pon", "Wto", "Śro", "Czw", "Pią", "Sob"],
+            daysMin: ["Ni", "Po", "Wt", "Śr", "Cz", "Pi", "So"],
+            months: ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"],
+            monthsShort: ["Sty", "Lut", "Mar", "Kwi", "Maj", "Cze", "Lip", "Sie", "Wrz", "Paź", "Lis", "Gru"],
+            today: "Dzisiaj",
+            clear: "Czyść",
+            format: "dd-mm-yyyy",
+            titleFormat: "MM yyyy", /* Leverages same syntax as 'format' */
+            weekStart: 1
+        };
+
+        $('.js-datepicker').datepicker({
+            format: 'dd-mm-yyyy',
+            language: 'pl',
+            'title': 'Urodziny'
+        });
+    });
+
+</script>
