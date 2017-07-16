@@ -29,7 +29,6 @@ class CatPersonType extends AbstractType
             ->add('catCompany', EntityType::class, array(
                 'label'    => 'Firma danej osoby',
                 'class'    => 'AppBundle\Entity\CatCompany',
-                'property' => 'name',
                 'mapped'   => false,
             ))
             ->add('catCompanyOffice', null, array(
