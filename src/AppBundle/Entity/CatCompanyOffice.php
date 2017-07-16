@@ -33,7 +33,7 @@ class CatCompanyOffice
     /**
      * @var \CatCompany
      *
-     * @ORM\ManyToOne(targetEntity="CatCompany", inversedBy="catCompanyOffices")
+     * @ORM\ManyToOne(targetEntity="CatCompany", inversedBy="catCompanyOffices", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_company_id", referencedColumnName="id", onDelete="CASCADE")
      * })

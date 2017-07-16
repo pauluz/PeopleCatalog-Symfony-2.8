@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  *  @ORM\Index(name="cat_city_id", columns={"cat_city_id"}),
  *  @ORM\Index(name="cat_company_office_id", columns={"cat_company_office_id"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CatPersonRepository")
  */
 class CatPerson
 {
@@ -48,7 +48,7 @@ class CatPerson
     /**
      * @var \CatCity
      *
-     * @ORM\ManyToOne(targetEntity="CatCity", inversedBy="catPersons")
+     * @ORM\ManyToOne(targetEntity="CatCity", inversedBy="catPersons", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_city_id", referencedColumnName="id", onDelete="SET NULL")
      * })
@@ -58,7 +58,7 @@ class CatPerson
     /**
      * @var \CatCompanyOffice
      *
-     * @ORM\ManyToOne(targetEntity="CatCompanyOffice", inversedBy="catPersons")
+     * @ORM\ManyToOne(targetEntity="CatCompanyOffice", inversedBy="catPersons", fetch="EAGER")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="cat_company_office_id", referencedColumnName="id", onDelete="SET NULL")
      * })
