@@ -11,13 +11,29 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+# pZ: level: 'debug', 'info', 'notice', 'warning',  'error', 'critical', 'alert', 'emergency'
 monolog:
+    use_microseconds: false
     handlers:
-        main:
+        # (1) - główny LOG samych ERROR do pliku "errors_[dev|prod|test].log" - tutaj będzie to samo co w "main"
+        applog:
             type: stream
-            path: '%kernel.logs_dir%/%kernel.environment%.log'
-            level: debug
+            path: "%kernel.logs_dir%/errors_%kernel.environment%.log"
+            level: error
+        # (2) - podstawowy log z action_level....
+        main:
+            # pZ: 'type:fingers_crossed' jest o tyle fajny, że do logów wpisze się coś JEDYNIE jeśli pojawi się komunikat typu: 'action_level:warning'
+            # czyli gdy będziemy mieli 'warning' albo coś więcej ('error', 'critical', etc ....)
+            # dodatkowo ograniczam komunikaty do poziomu 'level:info' aby nie szły do logów ogromne debugerskie rzeczy .....
+            type: fingers_crossed
+            action_level: warning
+            handler: app_nested_file
             channels: ['!event']
+        app_nested_file:
+            type:  stream
+            path:  "%kernel.logs_dir%/people_%kernel.environment%.log"
+            level: info
+
         console:
             type: console
             channels: ['!event', '!doctrine']

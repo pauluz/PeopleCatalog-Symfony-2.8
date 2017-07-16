@@ -14,3 +14,9 @@ web_profiler:
 
 swiftmailer:
     disable_delivery: true
+
+monolog:
+    use_microseconds: false
+    handlers:
+        main:
+            action_level: info
