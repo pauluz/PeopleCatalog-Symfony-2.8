@@ -34,18 +34,19 @@ class CatPersonController extends Controller
         $id = $request->get('company_select');
 
         $em = $this->getDoctrine()->getManager();
+
         $entities = $em->getRepository('AppBundle:CatCompanyOffice')->findByCatCompany($id);
 
         if ($entities) {
             foreach ($entities as $entity) {
                 $options[] = [
-                    'id' => $entity->getId(),
+                    'id'   => $entity->getId(),
                     'name' => $entity->getName(),
                 ];
             }
         } else {
             $options[] = [
-                'id' => 0,
+                'id'   => 0,
                 'name' => 'Brak oddziałów',
             ];
         }
@@ -72,9 +73,9 @@ class CatPersonController extends Controller
         }
 
         return array(
-            'entities'    => $entities,
-            'pagerHtml'   => $pagerHtml,
-            'filterForm'  => $filterForm->createView(),
+            'entities'     => $entities,
+            'pagerHtml'    => $pagerHtml,
+            'filterForm'   => $filterForm->createView(),
             'delete_forms' => $deleteForms,
         );
     }
@@ -89,7 +90,13 @@ class CatPersonController extends Controller
         $session      = $request->getSession();
         $filterForm   = $this->createForm(new CatPersonFilterType());
         $em           = $this->getDoctrine()->getManager();
-        $queryBuilder = $em->getRepository('AppBundle:CatPerson')->createQueryBuilder('e');
+        $queryBuilder = $em->getRepository('AppBundle:CatPerson')->createQueryBuilder('e')
+            ->addSelect('cc')
+            ->addSelect('cco')
+            ->addSelect('ccc')
+            ->leftJoin('e.catCity', 'cc')
+            ->leftJoin('e.catCompanyOffice', 'cco')
+            ->leftJoin('cco.catCompany', 'ccc');
 
         // Reset filter
         if ($request->get('filter_action') == 'reset') {
@@ -129,7 +136,7 @@ class CatPersonController extends Controller
         // Paginator
         $adapter    = new DoctrineORMAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
-        $pagerfanta->setMaxPerPage(2);
+//        $pagerfanta->setMaxPerPage(2);
         $currentPage = $this->getRequest()->get('page', 1);
         $pagerfanta->setCurrentPage($currentPage);
         $entities = $pagerfanta->getCurrentPageResults();
@@ -209,7 +216,7 @@ class CatPersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
+        $entity = $em->getRepository('AppBundle:CatPerson')->findWithAllJoins($id);
 
         if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
@@ -234,7 +241,7 @@ class CatPersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AppBundle:CatPerson')->find($id);
+        $entity = $em->getRepository('AppBundle:CatPerson')->findWithAllJoins($id);
 
         if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
@@ -267,7 +274,7 @@ class CatPersonController extends Controller
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
-        $editForm   = $this->createForm(new CatPersonType(), $entity);
+        $editForm = $this->createForm(new CatPersonType(), $entity);
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
