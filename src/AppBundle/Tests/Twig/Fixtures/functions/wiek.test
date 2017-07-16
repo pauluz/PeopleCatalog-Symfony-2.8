@@ -1,0 +1,53 @@
+--TEST--
+"wiek" function
+--TEMPLATE--
+{{ wiek(date00) }}
+{{ wiek(date1) }}
+{{ wiek(date2) }}
+{{ wiek(date5) }}
+{{ wiek(date18) }}
+{{ wiek(date22) }}
+{{ wiek(date23) }}
+{{ wiek(date24) }}
+{{ wiek(date25) }}
+{{ wiek(date32) }}
+{{ wiek(date34) }}
+{{ wiek(date35) }}
+{{ wiek(date41) }}
+{{ wiek(date42) }}
+{{ wiek(date45) }}
+--DATA--
+date_default_timezone_set('UTC');
+return array(
+    'date00' => new DateTime('2010-10-04 13:45'),
+    'date1'  => new DateTime('- 1 year'),
+    'date2'  => new DateTime('- 2 years'),
+    'date5'  => new DateTime('- 5 years'),
+    'date18' => new DateTime('- 18 years'),
+    'date22' => new DateTime('- 22 years'),
+    'date23' => new DateTime('- 23 years'),
+    'date24' => new DateTime('- 24 years'),
+    'date25' => new DateTime('- 25 years'),
+    'date32' => new DateTime('- 32 years'),
+    'date34' => new DateTime('- 34 years'),
+    'date35' => new DateTime('- 35 years'),
+    'date41' => new DateTime('- 41 years'),
+    'date42' => new DateTime('- 42 years'),
+    'date45' => new DateTime('- 45 years'),
+)
+--EXPECT--
+7 lat
+1 rok
+2 lata
+5 lat
+18 lat
+22 lata
+23 lata
+24 lata
+25 lat
+32 lata
+34 lata
+35 lat
+41 lat
+42 lata
+45 lat

@@ -1,0 +1,30 @@
+--TEST--
+"plec" function
+--TEMPLATE--
+{{ plec('KUBA') }}
+{{ plec('Bonawentura') }}
+{{ plec('Kosma ') }}
+{{ plec('  Jarema') }}
+{{ plec('Barnaba') }}
+{{ plec('Zawisza') }}
+{{ plec('Joanna') }}
+{{ plec('  Agnieszka') }}
+{{ plec('Karolina  ') }}
+{{ plec('Paweł') }}
+{{ plec('Kazimierz') }}
+{{ plec('Łukasz') }}
+--DATA--
+return array()
+--EXPECT--
+Mężczyzna
+Mężczyzna
+Mężczyzna
+Mężczyzna
+Mężczyzna
+Mężczyzna
+Kobieta
+Kobieta
+Kobieta
+Mężczyzna
+Mężczyzna
+Mężczyzna
