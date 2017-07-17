@@ -12,6 +12,8 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\DoctrineORMAdapter;
 use Pagerfanta\View\TwitterBootstrapView;
 
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+
 use AppBundle\Entity\CatPerson;
 use AppBundle\Form\CatPersonType;
 use AppBundle\Form\CatPersonFilterType;
@@ -60,14 +62,19 @@ class CatPersonController extends Controller
      * @Route("/", name="people")
      * @Method("GET")
      * @Template("CatPerson/index.html.twig")
+     *
+     * @param Request $request
+     *
+     * @return array
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        list($filterForm, $queryBuilder) = $this->filter();
+        list($filterForm, $queryBuilder) = $this->filter($request);
 
-        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+        list($entities, $pagerHtml) = $this->paginator($request, $queryBuilder);
 
         $deleteForms = [];
+        /** @var CatPerson $entity */
         foreach ($entities as $entity) {
             $deleteForms[$entity->getId()] = $this->createDeleteForm($entity->getId())->createView();
         }
@@ -75,7 +82,7 @@ class CatPersonController extends Controller
         return array(
             'entities'     => $entities,
             'pagerHtml'    => $pagerHtml,
-            'filterForm'   => $filterForm->createView(),
+//            'filterForm'   => $filterForm->createView(),
             'delete_forms' => $deleteForms,
         );
     }
@@ -83,13 +90,17 @@ class CatPersonController extends Controller
     /**
      * Create filter form and process filter request.
      *
+     * @param Request $request
+     *
+     * @return array
      */
-    protected function filter()
+    protected function filter(Request & $request)
     {
-        $request      = $this->getRequest();
-        $session      = $request->getSession();
-        $filterForm   = $this->createForm(new CatPersonFilterType());
-        $em           = $this->getDoctrine()->getManager();
+        $session = $request->getSession();
+//        $filterForm   = $this->createForm(CatPersonFilterType::class);
+
+        $em = $this->getDoctrine()->getManager();
+
         $queryBuilder = $em->getRepository('AppBundle:CatPerson')->createQueryBuilder('e')
             ->addSelect('cc')
             ->addSelect('cco')
@@ -103,10 +114,10 @@ class CatPersonController extends Controller
             $session->remove('CatPersonControllerFilter');
         }
 
-        // Filter action
+/*        // Filter action
         if ($request->get('filter_action') == 'filter') {
             // Bind values from the request
-            $filterForm->bind($request);
+            $filterForm->submit($request);
 
             if ($filterForm->isValid()) {
                 // Build the query from the given form object
@@ -119,25 +130,29 @@ class CatPersonController extends Controller
             // Get filter from session
             if ($session->has('CatPersonControllerFilter')) {
                 $filterData = $session->get('CatPersonControllerFilter');
-                $filterForm = $this->createForm(new CatPersonFilterType(), $filterData);
+                $filterForm = $this->createForm(CatPersonFilterType::class, $filterData);
                 $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
             }
-        }
+        }*/
 
-        return array($filterForm, $queryBuilder);
+        return array(null /*$filterForm*/, $queryBuilder);
     }
 
     /**
      * Get results from paginator and get paginator view.
      *
+     * @param Request $request
+     * @param         $queryBuilder
+     *
+     * @return array
      */
-    protected function paginator($queryBuilder)
+    protected function paginator(Request & $request, $queryBuilder)
     {
         // Paginator
         $adapter    = new DoctrineORMAdapter($queryBuilder);
         $pagerfanta = new Pagerfanta($adapter);
         $pagerfanta->setMaxPerPage(2);
-        $currentPage = $this->getRequest()->get('page', 1);
+        $currentPage = $request->get('page', 1);
         $pagerfanta->setCurrentPage($currentPage);
         $entities = $pagerfanta->getCurrentPageResults();
 
@@ -170,7 +185,7 @@ class CatPersonController extends Controller
     {
         $entity = new CatPerson();
         $form   = $this->createForm(new CatPersonType(), $entity);
-        $form->bind($request);
+        $form->submit($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -241,13 +256,14 @@ class CatPersonController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var CatPerson $entity */
         $entity = $em->getRepository('AppBundle:CatPerson')->findWithAllJoins($id);
 
         if (! $entity) {
             throw $this->createNotFoundException('Unable to find CatPerson entity.');
         }
 
-        $editForm   = $this->createForm(new CatPersonType(), $entity);
+        $editForm   = $this->createForm(new CatPersonType($entity->getCatCompanyOffice()->getCatCompany()), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -275,7 +291,7 @@ class CatPersonController extends Controller
         }
 
         $editForm = $this->createForm(new CatPersonType(), $entity);
-        $editForm->bind($request);
+        $editForm->submit($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
@@ -305,7 +321,7 @@ class CatPersonController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->bind($request);
+        $form->submit($request);
 
         if ($form->isValid()) {
             $em     = $this->getDoctrine()->getManager();
@@ -330,12 +346,12 @@ class CatPersonController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return Symfony\Component\Form\Form The form
+     * @return \Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
+            ->add('id', HiddenType::class)
             ->getForm();
     }
 }

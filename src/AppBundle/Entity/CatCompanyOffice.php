@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="cat_company_office", indexes={
  *  @ORM\Index(name="cat_company_id", columns={"cat_company_id"})
  * })
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CatCompanyOfficeRepository")
  */
 class CatCompanyOffice
 {
